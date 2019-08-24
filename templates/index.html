@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        //funcion que concatena los valores y operaciones
+        function dis(val) {
+            document.getElementById("result").value += val;
+        }
+        //funcion que llama el servicio y agrega el resultado
+        function solve() {
+            let x = document.getElementById("result").value;
+            let bodyFormData = new FormData();
+            bodyFormData.set('expr', x);
+            axios({
+                    method: "post",
+                    url: "/calcular",
+                    data: bodyFormData,
+                    config: {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                })
+                .then(function(response) {
+                    document.getElementById("result").value = response.data;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+        //funcion que limpia el ultimo resultado
+        function clr() {
+            document.getElementById("result").value = "";
+        }
+    </script>
+    <!-- estilos -->
+    <style>
+        input[type="button"] {
+            background-color: lightsteelblue;
+            color: black;
+            border: solid black 2px;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            background-color: white;
+            border: solid black 2px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1" align="center">
+        <tr>
+            <td colspan="3">
+                <input type="text" id="result" disabled />
+            </td>
+            <!-- clr() se llama la funcion limpiar -->
+            <td>
+                <input id="clear" type="button" value="c" onclick="clr()" />
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                <input id="1" type="button" value="1" onclick="dis('1')" />
+            </td>
+            <td>
+                <input id="2" type="button" value="2" onclick="dis('2')" />
+            </td>
+            <td>
+                <input id="3" type="button" value="3" onclick="dis('3')" />
+            </td>
+            <td>
+                <input id="division" type="button" value="/" onclick="dis('/')" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="4" type="button" value="4" onclick="dis('4')" />
+            </td>
+            <td>
+                <input id="5" type="button" value="5" onclick="dis('5')" />
+            </td>
+            <td>
+                <input id="6" type="button" value="6" onclick="dis('6')" />
+            </td>
+            <td>
+                <input id="resta" type="button" value="-" onclick="dis('-')" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="7" type="button" value="7" onclick="dis('7')" />
+            </td>
+            <td>
+                <input id="8" type="button" value="8" onclick="dis('8')" />
+            </td>
+            <td>
+                <input id="9" type="button" value="9" onclick="dis('9')" />
+            </td>
+            <td>
+                <input id="suma" type="button" value="+" onclick="dis('+')" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="punto" type="button" value="." onclick="dis('.')" />
+            </td>
+            <td>
+                <input id="0" type="button" value="0" onclick="dis('0')" />
+            </td>
+            <!-- se llama la funcion evaluar-->
+            <td>
+                <input id="resolver" type="button" value="=" onclick="solve()" />
+            </td>
+            <td>
+                <input id="multiplicacion" type="button" value="*" onclick="dis('*')" />
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
